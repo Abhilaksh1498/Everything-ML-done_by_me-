@@ -83,4 +83,5 @@ plt.ylabel('Error')
 plt.legend()
 plt.title("Learning Curves")
 plt.show()             
-       
+
+# We can say that this simple model was not able to overfit the data since test error decreases continuously on decreasing alpha
