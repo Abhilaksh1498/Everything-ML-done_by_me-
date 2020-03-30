@@ -20,7 +20,7 @@ corr_matrix = dataset.iloc[:,:-1].corr()
 # Properties of Correlation and Covariance
 #1.Correlation = [-1,1], Covariance = R
 #2. Correlation - unitless but covar is not
-#3. Corr - tells the strength as well as direction |cov|>.8 => strong dependency
+#3. Corr - tells the strength as well as direction |corr|>.8 => strong dependency
 #4. Cov only tells direction its magnitude is not an indicator of anything
 #5. Independent variables have 0 corr and cov
 #6. Corr = cov/sigma(x)*sigma(y)
