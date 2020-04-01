@@ -18,7 +18,7 @@ import os   # to read mp3 files
 
 converted = "output.wav"
 # convert wav to mp3                                                            
-sound = AudioSegment.from_mp3("D:/Music/Jannat 2 Party Nights Mash-Up by DJ Kiran Kamath - Emraan Hashmi, Esha Gupt1.mp3")
+sound = AudioSegment.from_mp3("D:/Music/Some hindi song.mp3")
 sound.export(converted, format="wav")
 
 with sr.AudioFile("output.wav") as source:
