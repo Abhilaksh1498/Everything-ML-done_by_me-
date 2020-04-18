@@ -1,0 +1,4 @@
+This is MultiClass image classification using CNN (simple model as of now without inception or resnet)
+The code is a result of intense scanning of webpages
+Only images and csv files are required for this model (no grouping in separate folders is required)
+It also contains code for converting to .csv
