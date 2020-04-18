@@ -17,37 +17,17 @@ from keras.layers import Input
 from keras.utils import np_utils
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
+from keras import regularizers
 import pandas as pd
 
-# different for every model
-#def preprocess_input(x, dim_ordering='default'):
-#    if dim_ordering == 'default':
-#        dim_ordering = K.common.image_dim_ordering()
-#    assert dim_ordering in {'tf', 'th'}
-#
-#    if dim_ordering == 'th':
-#        x[:, 0, :, :] -= 104.006
-#        x[:, 1, :, :] -= 116.669
-#        x[:, 2, :, :] -= 122.679
-#        # 'RGB'->'BGR'
-#        x = x[:, ::-1, :, :]
-#    else:
-#        x[:, :, :, 0] -= 104.006
-#        x[:, :, :, 1] -= 116.669
-#        x[:, :, :, 2] -= 122.679
-#        # 'RGB'->'BGR'
-#        x = x[:, :, :, ::-1]
-#    return x
-
 ##getting the shape of images
-img_path = 'C:/Users/MSI_PC/Desktop/RH intern task/question1/train/1.png'
-img = image.load_img(img_path, target_size=(224, 224))
-x = image.img_to_array(img)
-print (x.shape)
-x = np.expand_dims(x, axis=0)
-print (x.shape)
-#x = preprocess_input(x)
-print('Input image shape:', x.shape)
+#img_path = 'C:/Users/MSI_PC/Desktop/RH intern task/question1/train/1.png'
+#img = image.load_img(img_path, target_size=(224, 224))
+#x = image.img_to_array(img)
+#print (x.shape)
+#x = np.expand_dims(x, axis=0)
+#print (x.shape)
+#print('Input image shape:', x.shape)
 
 
 ##training data
@@ -66,14 +46,8 @@ for img in data_dir_list:
 
 img_data = np.array(img_data_list)
 
-print (img_data.shape)
-#img_data=np.rollaxis(img_data,1,0)
-#print (img_data.shape)
-#img_data=img_data[0]
-#print (img_data.shape)
-#print (img_data)
-
 x_total = img_data
+x_total /= 255 # We always need to normalise in DL models
 
 dataset = pd.read_csv(r'C:\Users\MSI_PC\Desktop\RH intern task\question1\Train.csv')
 Y = []
@@ -109,7 +83,7 @@ clf.summary()
 clf.compile(loss='categorical_crossentropy',optimizer='adam',metrics=['accuracy'])
 t=time.time()
 
-hist = clf.fit(X_train, y_train, epochs=50, verbose=1, validation_data=(X_val, y_val))
+hist = clf.fit(X_train, y_train, epochs=10, verbose=1, validation_data=(X_val, y_val))
 hist = hist.history
 print('Training time: %s' % (t - time.time()))
 
@@ -145,16 +119,18 @@ plt.ylabel('Losses')
 plt.show()
 
 # The train accuracies ~ 92% val_accuracies ~ 85%  [dropout = .5]
-# lets try to decrease dropout [droupout =.3] After Epoch 6 (optimal in this case)
-# train_acc = 91.2% val_acc ~ 84.5%
+
+# Lets use regularization.l2(.01) instead of Droupout layer to prevent overfitiing
+# only in Dense layer we get an even better model with 20 epochs
+
 ###############3
 
 # Computing f1_score
 y_pred_val = clf.predict_classes(X_val)
 y_pred_val = np_utils.to_categorical(y_pred_val)
 from sklearn.metrics import f1_score, accuracy_score
-f1 = f1_score(y_val, y_pred_val, average= 'macro')  #.848
-acc_val = accuracy_score(y_val, y_pred_val)    # 84.8%
+f1 = f1_score(y_val, y_pred_val, average= 'macro')  #.876
+acc_val = accuracy_score(y_val, y_pred_val)    # 87.8%
 
 
 
@@ -171,6 +147,7 @@ for img in dataset_test.name:
     img_data_list.append(x)
 
 X_test = np.array(img_data_list)
+X_test /= 255
 y_pred = clf.predict_classes(X_test)
 for j in range(0,len(y_pred)):
        y_pred[j]+=1
