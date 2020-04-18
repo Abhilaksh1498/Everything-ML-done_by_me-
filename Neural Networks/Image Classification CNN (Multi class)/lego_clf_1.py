@@ -176,6 +176,8 @@ for j in range(0,len(y_pred)):
        y_pred[j]+=1
 
 submission = pd.concat([dataset_test, pd.DataFrame(y_pred)], axis = 1)
+#we can change column names of pandas dataframe by 
+# submission.columns = ['name_1','name_2']
 
 submission.to_csv(path_or_buf = r'C:\Users\MSI_PC\Desktop\RH intern task\question1\predictions_submission.csv', 
                   index =False)
