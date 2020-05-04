@@ -133,3 +133,5 @@ onehot_answers = np.zeros((padded_answers.shape[0], padded_answers.shape[1], VOC
 onehot_answers = utils.to_categorical(padded_answers , VOCAB_SIZE)
 decoder_output_data = np.array( onehot_answers )
 print(decoder_output_data.shape)
+
+######################################################### WORK IN PROGRESS ################################################################
