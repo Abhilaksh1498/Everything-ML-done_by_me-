@@ -1,2 +1,1 @@
-# SoC-20-Chat
-There is an addition and some changes to original files
+This repo contains most of the things I've done so far in Machine Learning (via courses, articles...)
