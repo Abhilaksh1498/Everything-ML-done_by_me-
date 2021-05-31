@@ -1,3 +1,0 @@
-This is code for SVM and I've used GridSearch CV in conjunction with K-fold cv to get the hyperparameters
-I've then used Cross validation to determine f1 and accuracy score
-I've also plotted variance in these two scores as a function of k (its clear that variance increases as k increases)
